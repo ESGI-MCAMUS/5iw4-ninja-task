@@ -11,7 +11,7 @@ async function bootstrap() {
     {
       transport: Transport.GRPC,
       options: {
-        url: `0.0.0.0:${process.env.PORT || 5000}`,
+        url: `0.0.0.0:${process.env.PORT || 5555}`,
         package: 'task.v1alpha',
         protoPath: join(
           __dirname,

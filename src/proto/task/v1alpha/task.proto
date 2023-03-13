@@ -55,7 +55,7 @@ message ListTasksResponse {
 
 message GetTaskRequest {
   // The field will contain name of the resource requested.
-  string name = 1;
+  int32 id = 1;
 }
 
 message CreateTaskRequest {
@@ -81,5 +81,5 @@ message UpdateTaskRequest {
 
 message DeleteTaskRequest {
   // The resource name of the Task to be deleted.
-  string name = 1;
+  int32 id = 1;
 }

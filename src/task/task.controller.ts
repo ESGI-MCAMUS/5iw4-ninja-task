@@ -21,12 +21,7 @@ export class TaskController {
   createTask(data: CreateTaskRequest) {
     if (!data.task) {
       throw new RpcException({ code: 400, message: 'Task is required' });
-    } else if (
-      !data.task.title ||
-      !data.task.description ||
-      !data.task.status ||
-      !data.task.dueDate
-    ) {
+    } else if (!data.task.title || !data.task.description) {
       throw new RpcException({
         code: 400,
         message: 'Task title, description, status and dueDate are required',
@@ -58,15 +53,15 @@ export class TaskController {
 
   @GrpcMethod('TaskService')
   async GetTask(request: GetTaskRequest): Promise<Task> {
-    if (!request.name) {
+    if (!request.id) {
       throw new RpcException({ code: 400, message: 'Task id is required' });
-    } else if (isNaN(Number(request.name))) {
+    } else if (isNaN(Number(request.id))) {
       throw new RpcException({
         code: 400,
         message: 'Task id must be a number',
       });
     }
-    const task = await this.taskService.findById(Number(request.name));
+    const task = await this.taskService.findById(Number(request.id));
 
     if (!task) {
       throw new RpcException({ code: 404, message: 'Task not found' });
@@ -105,15 +100,15 @@ export class TaskController {
 
   @GrpcMethod('TaskService')
   async DeleteTask(request: DeleteTaskRequest): Promise<Task> {
-    if (!request.name) {
+    if (!request.id) {
       throw new RpcException({ code: 400, message: 'Task id is required' });
-    } else if (isNaN(Number(request.name))) {
+    } else if (isNaN(Number(request.id))) {
       throw new RpcException({
         code: 400,
         message: 'Task id must be a number',
       });
     }
-    const task = await this.taskService.remove(Number(request.name));
+    const task = await this.taskService.remove(Number(request.id));
 
     if (!task) {
       throw new RpcException({ code: 404, message: 'Task not found' });
